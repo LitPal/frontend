@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { hostURL } from "../constants";
+import { hostURL, proxyURL } from "../constants";
 import axios from "axios";
 
 import EReader from "./components/e-reader/EReader";
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState([""]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -38,7 +38,11 @@ function App() {
 
       {searchResults.length > 0 && (
         <div className="flex justify-center">
-          <h1> hello </h1>
+          <EReader
+            fileURL={
+              "https://proceedings.neurips.cc/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf"
+            }
+          />
         </div>
       )}
     </>
