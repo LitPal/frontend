@@ -5,8 +5,9 @@ import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 import { RequireAuth } from "react-auth-kit";
 
-import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import HomePage from "./pages/HomePage/HomePage";
+import DisplayPage from "./pages/DisplayPage/DisplayPage";
 
 function App() {
   return (
@@ -19,6 +20,14 @@ function App() {
           element={
             <RequireAuth authType="cookie" loginPath="/login">
               <HomePage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/display"
+          element={
+            <RequireAuth authType="cookie" loginPath="/login">
+              <DisplayPage />
             </RequireAuth>
           }
         />

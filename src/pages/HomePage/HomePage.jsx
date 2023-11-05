@@ -9,17 +9,34 @@ import EReader from "../../components/e-reader/EReader";
 import SignOutButton from "../../components/SignOutButton";
 import SearchCard from "./SearchCard";
 
+import { useNavigate } from "react-router-dom";
+
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
+  const navigate = useNavigate();
+
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    const encodedQuery = encodeURIComponent(searchQuery);
     const response = await axios.get(
-      `${hostURL}/get-search-queries/${Cookies.get("_auth")}/${searchQuery}`
+      `${hostURL}/get-search-queries/${Cookies.get("_auth")}/${encodedQuery}`
     );
 
     setSearchResults(response.data);
+  };
+
+  const onClickSearchCard = (title, url, citations, date) => {
+    navigate("/display", {
+      state: {
+        title: title,
+        url: url,
+        citations: citations,
+        date: date,
+      },
+    });
   };
 
   return (
@@ -52,7 +69,7 @@ function HomePage() {
               url={result.url}
               citations={result.citations}
               date={result.date}
-              handleClick={() => {}}
+              handleClick={onClickSearchCard}
             />
           ))}
       </div>

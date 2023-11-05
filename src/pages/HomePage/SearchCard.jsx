@@ -11,9 +11,8 @@ function SearchCard({ title, url, citations, date, handleClick }) {
   }, []);
 
   const onClick = () => {
-    handleClick(url);
+    handleClick(title, url, citations, date);
     setLiked(!liked);
-    console.log("hello", liked);
   };
 
   const likedArticle = (ev) => {
