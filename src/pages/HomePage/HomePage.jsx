@@ -4,6 +4,7 @@ import axios from "axios";
 
 import EReader from "../../components/e-reader/EReader";
 // import Chatbox from "../../components/chatbox/Chatbox";
+import SignOutButton from "../../components/SignOutButton";
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,6 +22,7 @@ function HomePage() {
 
   return (
     <>
+      <SignOutButton className="m-5" />
       <form className="my-10 flex justify-center w-full">
         <div>
           <input

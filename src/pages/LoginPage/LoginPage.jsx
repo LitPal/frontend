@@ -55,7 +55,7 @@ function LoginPage() {
         tokenType: "Bearer",
         authState: { email: email },
       });
-      navigate("/requests");
+      navigate("/");
     }
 
     // if response.data
