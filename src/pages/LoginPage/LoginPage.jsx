@@ -1,10 +1,18 @@
 import { useState } from "react";
 import { hostURL } from "../../../constants";
 
+import axios from "axios";
+
+import { useSignIn } from "react-auth-kit";
+import { useNavigate } from "react-router-dom";
+
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
+
+  const navigate = useNavigate();
+  const signIn = useSignIn();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -26,8 +34,12 @@ function LoginPage() {
     setStatus("Authenticating...");
     let response;
     try {
-      response = await axios.get(`${hostURL}/login/${email}/${password}`);
+      response = await axios.post(`${hostURL}/login`, {
+        username: email,
+        password: password,
+      });
     } catch (err) {
+      console.log(err);
       setStatus("Error connecting to server. Try again later.");
       return;
     }
