@@ -1,29 +1,31 @@
 import { useState } from "react";
 import { hostURL, proxyURL } from "../../../constants";
+
 import axios from "axios";
+import Cookies from "js-cookie";
 
 import EReader from "../../components/e-reader/EReader";
 // import Chatbox from "../../components/chatbox/Chatbox";
 import SignOutButton from "../../components/SignOutButton";
+import SearchCard from "./SearchCard";
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([""]);
+  const [searchResults, setSearchResults] = useState([]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     const response = await axios.get(
-      `${hostURL}/get_search_queries/${searchQuery}`
+      `${hostURL}/get-search-queries/${Cookies.get("_auth")}/${searchQuery}`
     );
 
-    console.log(response.data);
     setSearchResults(response.data);
   };
 
   return (
     <>
       <SignOutButton className="m-5" />
-      <form className="my-10 flex justify-center w-full">
+      <form onSubmit={onSubmit} className="my-10 flex justify-center w-full">
         <div>
           <input
             type="text"
@@ -41,7 +43,19 @@ function HomePage() {
         </button>
       </form>
 
-      {searchResults.length > 0 && <div className="flex justify-center"></div>}
+      <div className="flex flex-col items-center">
+        {searchResults.length > 0 &&
+          searchResults.map((result, ind) => (
+            <SearchCard
+              key={ind}
+              title={result.title}
+              url={result.url}
+              citations={result.citations}
+              date={result.date}
+              handleClick={() => {}}
+            />
+          ))}
+      </div>
     </>
   );
 }

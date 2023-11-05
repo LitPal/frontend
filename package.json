@@ -15,12 +15,14 @@
     "@chatscope/chat-ui-kit-styles": "^1.4.0",
     "axios": "^1.6.0",
     "babel-helpers": "^6.24.1",
+    "js-cookie": "^3.0.5",
     "pdfjs-dist": "^3.11.174",
     "react": "^18.2.0",
     "react-auth-kit": "^2.12.5",
     "react-dom": "^18.2.0",
     "react-pdf": "^7.5.1",
     "react-router-dom": "^6.18.0",
+    "react-useanimations": "^2.10.0",
     "vite-plugin-static-copy": "^0.17.0"
   },
   "devDependencies": {
