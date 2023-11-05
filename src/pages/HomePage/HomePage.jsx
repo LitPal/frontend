@@ -4,8 +4,7 @@ import { hostURL, proxyURL } from "../../../constants";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-import EReader from "../../components/e-reader/EReader";
-// import Chatbox from "../../components/chatbox/Chatbox";
+import Chatbox from "../../components/chatbox/Chatbox";
 import SignOutButton from "../../components/SignOutButton";
 import SearchCard from "./SearchCard";
 
@@ -40,7 +39,7 @@ function HomePage() {
   };
 
   return (
-    <>
+    <div className="w-full h-full">
       <SignOutButton className="m-5" />
       <form onSubmit={onSubmit} className="my-10 flex justify-center w-full">
         <div>
@@ -73,7 +72,7 @@ function HomePage() {
             />
           ))}
       </div>
-    </>
+    </div>
   );
 }
 

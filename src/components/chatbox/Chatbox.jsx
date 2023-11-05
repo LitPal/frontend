@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 
 import { hostURL } from "../../../constants";
+
+import { useSpring, animated } from "react-spring";
 
 import {
   MainContainer,
@@ -15,49 +17,52 @@ import {
 
 import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
-function Chatbox() {
+function Chatbox({ className }) {
   const [messageInputValue, setMessageInputValue] = useState("");
   const [allMessages, setAllMessages] = useState([]);
 
   const [isBotTyping, setIsBotTyping] = useState(false);
 
   const handleNewUserMessage = (newMessage) => {
+    console.log(newMessage);
     setMessageInputValue("");
-    setAllMessages([
-      ...allMessages,
+    const newMessageObject = [
       {
         sender: "user",
         message: newMessage,
         sentTime: new Date().toLocaleTimeString(),
       },
-    ]);
+    ];
+    setAllMessages((prev) => [...prev, ...newMessageObject]);
     setIsBotTyping(true);
     postChatbotMessage(newMessage).then((chatbotResponse) => {});
   };
   const postChatbotMessage = async (messageInput) => {
-    let postUrl = `${hostURL}/get-message/${Cookies.get(
+    let postUrl = `${hostURL}/get-bot-message/${Cookies.get(
       "_auth"
     )}/${messageInput}`;
 
     let chatbotResponse;
     return axios.get(postUrl).then((response) => {
-      chatbotResponse = response.data;
+      chatbotResponse = response.data.answer;
       setIsBotTyping(false);
-      setAllMessages([
-        ...allMessages,
+      setAllMessages((prev) => [
+        ...prev,
         {
           sender: "bot",
           message: chatbotResponse,
           sentTime: new Date().toLocaleTimeString(),
         },
       ]);
+
       return chatbotResponse;
     });
   };
 
+  console.log(allMessages);
   return (
-    <div>
-      <MainContainer className="border rounded-lg p-2 w-1/4">
+    <div className={"flex flex-col w-1/4 " + className}>
+      <MainContainer className="border rounded-lg p-2">
         <ChatContainer>
           <MessageList
             typingIndicator={
@@ -81,8 +86,7 @@ function Chatbox() {
                   message: message.message,
                   sender: message.sender,
                   sentTime: message.sentTime,
-                  direction:
-                    message.sender === "user" ? "outgoing" : "incoming",
+                  direction: message.sender == "user" ? "outgoing" : "incoming",
                 }}
               />
             ))}
@@ -97,8 +101,6 @@ function Chatbox() {
           />
         </ChatContainer>
       </MainContainer>
-
-      <div className="w-16 h-16 rounded-full bg-blue-800 shadow-md"></div>
     </div>
   );
 }

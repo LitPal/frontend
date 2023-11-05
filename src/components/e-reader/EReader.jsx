@@ -14,12 +14,13 @@ const options = {
   standardFontDataUrl: "/standard_fonts/",
 };
 
-function EReader({ fileURL }) {
+function EReader({ fileURL, onDocLoad }) {
   const [numPages, setNumPages] = useState(0);
   const [pageNum, setPageNum] = useState(1);
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
+    onDocLoad();
   }
 
   function handlePrevPage() {
