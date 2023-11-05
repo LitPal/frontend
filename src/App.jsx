@@ -3,6 +3,7 @@ import { hostURL, proxyURL } from "../constants";
 import axios from "axios";
 
 import EReader from "./components/e-reader/EReader";
+// import Chatbox from "./components/chatbox/Chatbox";
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -10,7 +11,9 @@ function App() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.get(`${hostURL}/search/${searchQuery}`);
+    const response = await axios.get(
+      `${hostURL}/get_search_queries/${searchQuery}`
+    );
 
     console.log(response.data);
     setSearchResults(response.data);
@@ -36,17 +39,14 @@ function App() {
         </button>
       </form>
 
-      {searchResults.length > 0 && (
-        <div className="flex justify-center">
-          <EReader
-            fileURL={
-              "https://proceedings.neurips.cc/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf"
-            }
-          />
-        </div>
-      )}
+      {searchResults.length > 0 && <div className="flex justify-center"></div>}
     </>
   );
 }
 
+// <EReader
+//   fileURL={
+//     "https://proceedings.neurips.cc/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf"
+//   }
+// />
 export default App;
