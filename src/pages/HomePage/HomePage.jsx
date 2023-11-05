@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { hostURL, proxyURL } from "../constants";
+import { hostURL, proxyURL } from "../../../constants";
 import axios from "axios";
 
 import EReader from "../../components/e-reader/EReader";
